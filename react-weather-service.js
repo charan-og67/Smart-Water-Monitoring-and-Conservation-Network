@@ -1,0 +1,2 @@
+export async function getWeather(city, apiKey){const url=`https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;const response=await fetch(url);if(!response.ok)throw new Error('Weather request failed');const data=await response.json();return data.list.map(x=>({time:x.dt_txt,rain:x.rain?.['3h']||0,temperature:x.main.temp}));}
+export function averageTemperature(rows){return rows.reduce((sum,r)=>sum+r.temperature,0)/(rows.length||1);}

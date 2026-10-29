@@ -1,0 +1,17 @@
+<!ELEMENT smartWater (stations, measurements, alerts)>
+<!ELEMENT stations (station*)>
+<!ELEMENT station (name, location)>
+<!ATTLIST station id ID #REQUIRED>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT location (#PCDATA)>
+<!ELEMENT measurements (measurement*)>
+<!ELEMENT measurement (ph, turbidity, temperature)>
+<!ATTLIST measurement id ID #REQUIRED stationId IDREF #REQUIRED>
+<!ELEMENT ph (#PCDATA)>
+<!ELEMENT turbidity (#PCDATA)>
+<!ELEMENT temperature (#PCDATA)>
+<!ELEMENT alerts (alert*)>
+<!ELEMENT alert (severity, message)>
+<!ATTLIST alert id ID #REQUIRED stationId IDREF #REQUIRED>
+<!ELEMENT severity (#PCDATA)>
+<!ELEMENT message (#PCDATA)>

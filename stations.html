@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monitoring Stations</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.html">💧 Smart Water</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="stations.html">Stations</a></li>
+        <li class="nav-item"><a class="nav-link" href="alerts.html">Alerts</a></li>
+        <li class="nav-item"><a class="nav-link" href="weather.html">Weather Dashboard</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<main class="flex-grow-1 py-5">
+  <div class="container">
+    <div class="mb-4">
+      <h1 class="display-6 fw-bold">Monitoring Station Catalog</h1>
+      <p class="text-secondary mb-0">View current station status and water-quality readings.</p>
+    </div>
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-body p-4">
+        <h2 class="h4">Add Monitoring Station</h2>
+        <p class="text-secondary">All fields are checked before the station is added.</p>
+        <form id="stationForm" class="row g-3">
+          <div class="col-12 col-md-6">
+            <label for="stationId" class="form-label fw-semibold">Station ID</label>
+            <input id="stationId" name="stationId" class="form-control" required pattern="ST-[0-9]{3}" maxlength="6" placeholder="ST-004">
+            <div class="invalid-feedback">Use the format ST-004.</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <label for="stationName" class="form-label fw-semibold">Station Name</label>
+            <input id="stationName" name="stationName" class="form-control" required minlength="3" maxlength="60" placeholder="New Reservoir">
+            <div class="invalid-feedback">Enter a station name between 3 and 60 characters.</div>
+          </div>
+          <div class="col-12 col-md-6">
+            <label for="ph" class="form-label fw-semibold">pH (0–14)</label>
+            <input id="ph" name="ph" class="form-control" type="number" required min="0" max="14" step="0.1">
+          </div>
+          <div class="col-12 col-md-6">
+            <label for="tds" class="form-label fw-semibold">TDS (mg/L)</label>
+            <input id="tds" name="tds" class="form-control" type="number" required min="0" max="5000" step="1">
+          </div>
+          <div class="col-12 col-md-6">
+            <label for="temperature" class="form-label fw-semibold">Temperature (°C)</label>
+            <input id="temperature" name="temperature" class="form-control" type="number" required min="-50" max="100" step="0.1">
+          </div>
+          <div class="col-12 col-md-6">
+            <label for="stationStatus" class="form-label fw-semibold">Status</label>
+            <select id="stationStatus" name="stationStatus" class="form-select" required>
+              <option value="">Select status</option>
+              <option value="ACTIVE">Active</option>
+              <option value="INACTIVE">Inactive</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary" type="submit">Validate & Add</button>
+          </div>
+        </form>
+        <div id="stationMsg" class="mt-3" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="row g-4" id="stationList">
+      <div class="col-12 col-md-6 col-xl-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+            <span class="badge text-bg-success mb-3">ACTIVE</span>
+            <h2 class="h4">ST-001 — Hyderabad Lake</h2>
+            <p class="text-secondary">📍 Hyderabad Lake</p>
+            <div class="row g-2 mt-3">
+              <div class="col-4"><div class="reading">pH <strong>7.2</strong></div></div>
+              <div class="col-4"><div class="reading">TDS <strong>310</strong></div></div>
+              <div class="col-4"><div class="reading">Temp <strong>25.5°C</strong></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-xl-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+            <span class="badge text-bg-success mb-3">ACTIVE</span>
+            <h2 class="h4">ST-002 — Medchal Reservoir</h2>
+            <p class="text-secondary">📍 Medchal Reservoir</p>
+            <div class="row g-2 mt-3">
+              <div class="col-4"><div class="reading">pH <strong>6.8</strong></div></div>
+              <div class="col-4"><div class="reading">TDS <strong>420</strong></div></div>
+              <div class="col-4"><div class="reading">Temp <strong>27°C</strong></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-xl-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+            <span class="badge text-bg-secondary mb-3">INACTIVE</span>
+            <h2 class="h4">ST-003 — Village Tank</h2>
+            <p class="text-secondary">📍 Village Tank</p>
+            <div class="row g-2 mt-3">
+              <div class="col-4"><div class="reading">pH <strong>7.0</strong></div></div>
+              <div class="col-4"><div class="reading">TDS <strong>350</strong></div></div>
+              <div class="col-4"><div class="reading">Temp <strong>26°C</strong></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="bg-dark text-white text-center py-4 mt-auto">
+  <div class="container">
+    <p class="mb-0">Smart Water Quality Monitoring and Conservation Network</p>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

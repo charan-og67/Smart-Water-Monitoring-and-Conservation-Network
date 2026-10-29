@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE smartWater SYSTEM "water-data.dtd">
+<smartWater>
+  <stations><station id="ST-001"><name>Lake View Station</name><location>Hyderabad</location></station></stations>
+  <measurements><measurement id="M-001" stationId="ST-001"><ph>7.2</ph><turbidity>2.1</turbidity><temperature>25.4</temperature></measurement></measurements>
+  <alerts><alert id="A-001" stationId="ST-001"><severity>Medium</severity><message>Elevated turbidity</message></alert></alerts>
+</smartWater>

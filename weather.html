@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weather & Water Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.html">💧 Smart Water</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="stations.html">Stations</a></li>
+        <li class="nav-item"><a class="nav-link" href="alerts.html">Alerts</a></li>
+        <li class="nav-item"><a class="nav-link active" href="weather.html">Weather Dashboard</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="flex-grow-1">
+  <section class="py-4 py-lg-5">
+    <div class="container">
+      <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+        <div>
+          <span class="badge text-bg-info mb-2">EXPERIMENT 4 • ES6 + OPENWEATHERMAP</span>
+          <h1 class="display-6 fw-bold mb-2">Weather & Water Quality Dashboard</h1>
+          <p class="text-secondary mb-0">Compare rainfall and temperature trends with water-quality measurements.</p>
+        </div>
+        <div class="text-lg-end">
+          <span id="apiStatus" class="badge text-bg-secondary">API not configured</span>
+        </div>
+      </div>
+
+      <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body">
+          <h2 class="h5">OpenWeatherMap Settings</h2>
+          <p class="small text-secondary">Enter your OpenWeatherMap API key. It is stored only in this browser using localStorage.</p>
+          <form id="weatherForm" class="row g-3">
+            <div class="col-md-5">
+              <label for="apiKey" class="form-label">API Key</label>
+              <input id="apiKey" class="form-control" type="password" placeholder="Enter OpenWeatherMap API key">
+            </div>
+            <div class="col-md-3">
+              <label for="city" class="form-label">City</label>
+              <input id="city" class="form-control" value="Hyderabad" required>
+            </div>
+            <div class="col-md-2">
+              <label for="country" class="form-label">Country</label>
+              <input id="country" class="form-control" value="IN" maxlength="2" required>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+              <button class="btn btn-primary w-100" type="submit">Load Weather</button>
+            </div>
+          </form>
+          <div id="weatherMsg" class="mt-3"></div>
+        </div>
+      </div>
+
+      <div id="summaryRow" class="row g-3 mb-4">
+        <div class="col-md-4"><div class="card border-0 shadow-sm h-100"><div class="card-body">
+          <div class="text-secondary small">Current Temperature</div><div id="currentTemp" class="display-6 fw-bold">--</div>
+        </div></div></div>
+        <div class="col-md-4"><div class="card border-0 shadow-sm h-100"><div class="card-body">
+          <div class="text-secondary small">Current Rainfall</div><div id="currentRain" class="display-6 fw-bold">--</div>
+        </div></div></div>
+        <div class="col-md-4"><div class="card border-0 shadow-sm h-100"><div class="card-body">
+          <div class="text-secondary small">Water Quality Status</div><div id="waterStatus" class="display-6 fw-bold">Good</div>
+        </div></div></div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <h2 class="h5">Temperature Trend</h2>
+              <canvas id="temperatureChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <h2 class="h5">Rainfall Trend</h2>
+              <canvas id="rainfallChart"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <h2 class="h5">Water-Quality Measurements</h2>
+              <canvas id="waterChart"></canvas>
+              <p class="small text-secondary mt-2 mb-0">The water-quality series is sample monitoring data for Experiment 4 demonstration.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card border-0 shadow-sm mt-4">
+        <div class="card-body">
+          <h2 class="h5">ES6 Features Demonstrated</h2>
+          <div class="row g-3">
+            <div class="col-md-3"><div class="p-3 bg-light rounded"><strong>Arrow functions</strong><br><span class="small text-secondary">Used for mapping and processing data.</span></div></div>
+            <div class="col-md-3"><div class="p-3 bg-light rounded"><strong>Callbacks</strong><br><span class="small text-secondary">Used when updating the dashboard after data processing.</span></div></div>
+            <div class="col-md-3"><div class="p-3 bg-light rounded"><strong>Promises</strong><br><span class="small text-secondary">Used by the weather API request.</span></div></div>
+            <div class="col-md-3"><div class="p-3 bg-light rounded"><strong>Async/Await</strong><br><span class="small text-secondary">Used for readable asynchronous API handling.</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-dark text-white text-center py-4 mt-auto">
+  <div class="container"><p class="mb-0">Smart Water Quality Monitoring and Conservation Network</p></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="js/experiment4.js"></script>
+</body>
+</html>

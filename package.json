@@ -1,0 +1,15 @@
+{
+  "name": "smart-water-combined",
+  "version": "1.0.0",
+  "description": "Smart Water Quality Monitoring and Conservation Network - Experiments 1-15 combined",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "custom-server": "node custom-server.js",
+    "test": "node -e \"const t=require(\"./test-all\"); console.log(JSON.stringify(t.runStaticChecks(),null,2))\""
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

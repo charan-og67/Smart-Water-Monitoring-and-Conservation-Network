@@ -1,0 +1,5 @@
+import React, {useEffect, useState} from 'react';
+import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
+export default function App(){return <BrowserRouter><nav><Link to="/">Dashboard</Link> | <Link to="/register">Register</Link> | <Link to="/login">Login</Link> | <Link to="/contact">Contact</Link> | <Link to="/about">About</Link></nav><Routes><Route path="/" element={<Dashboard/>}/><Route path="/register" element={<Form title="Stakeholder Registration"/>}/><Route path="/login" element={<Form title="Stakeholder Login"/>}/><Route path="/contact" element={<p>Contact Smart Water support.</p>}/><Route path="/about" element={<p>Smart Water Quality Monitoring and Conservation Network.</p>}/></Routes></BrowserRouter>}
+function Dashboard(){const [data,setData]=useState([]);useEffect(()=>{fetch('/api/stations').then(r=>r.json()).then(setData)},[]);return <main><h1>Water Quality Dashboard</h1><p>Monitoring stations: {data.length}</p>{data.map(s=><div key={s.id}>{s.id} - {s.name}</div>)}</main>}
+function Form({title}){return <main><h2>{title}</h2><input placeholder="Name / Username"/><button>Submit</button></main>}

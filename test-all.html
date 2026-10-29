@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Water — Experiment Test Center</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .test-card { border-left: 5px solid #dee2e6; }
+    .PASS { border-left-color: #198754; }
+    .READY { border-left-color: #0d6efd; }
+    .MANUAL { border-left-color: #ffc107; }
+    .FAIL { border-left-color: #dc3545; }
+    .status { min-width: 78px; text-align:center; }
+  </style>
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-dark bg-primary"><div class="container"><a class="navbar-brand fw-bold" href="index.html">💧 Smart Water</a><a class="btn btn-light btn-sm" href="index.html">Home</a></div></nav>
+<main class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <div><h1 class="h2 mb-1">Experiment Test Center</h1><p class="text-secondary mb-0">Checks what can be verified automatically and clearly marks external/runtime requirements.</p></div>
+    <button id="runBtn" class="btn btn-primary">Run all checks</button>
+  </div>
+  <div id="summary" class="alert alert-secondary">Press <b>Run all checks</b>.</div>
+  <h2 class="h4 mt-4">Experiments 1–15</h2>
+  <div id="results" class="vstack gap-2"></div>
+  <h2 class="h4 mt-4">Live server checks</h2>
+  <div id="live" class="vstack gap-2"></div>
+  <div class="alert alert-info mt-4"><b>Status meaning:</b> PASS = verified by the test system; READY = source/configuration is present but needs an external runtime/API; MANUAL = needs a separate runtime test; FAIL = expected source/check is missing or broken.</div>
+</main>
+<script>
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const badge = s => `<span class="badge ${s==='PASS'?'text-bg-success':s==='READY'?'text-bg-primary':s==='MANUAL'?'text-bg-warning':'text-bg-danger'} status">${esc(s)}</span>`;
+function render(target, rows) {
+  document.getElementById(target).innerHTML = rows.map(r => `<div class="card test-card ${esc(r.status)} shadow-sm"><div class="card-body"><div class="d-flex justify-content-between gap-3"><div><h3 class="h6 mb-1">${esc(r.id)} — ${esc(r.name)}</h3><div>${esc(r.detail)}</div>${r.evidence?`<small class="text-secondary">Evidence: ${esc(r.evidence)}</small>`:''}</div>${badge(r.status)}</div></div></div>`).join('');
+}
+async function run() {
+  const btn = document.getElementById('runBtn'); btn.disabled = true; btn.textContent = 'Testing…';
+  document.getElementById('summary').className='alert alert-info'; document.getElementById('summary').textContent='Running static and live checks…';
+  try {
+    const data = await fetch('/api/test-all').then(r => r.json());
+    render('results', data.static);
+    render('live', data.live);
+    const all = [...data.static, ...data.live];
+    const pass = all.filter(x=>x.status==='PASS').length;
+    const ready = all.filter(x=>x.status==='READY').length;
+    const manual = all.filter(x=>x.status==='MANUAL').length;
+    const fail = all.filter(x=>x.status==='FAIL').length;
+    document.getElementById('summary').className = `alert ${fail ? 'alert-danger' : 'alert-success'}`;
+    document.getElementById('summary').innerHTML = `<b>Checked:</b> ${all.length} items — <b>${pass} PASS</b>, <b>${ready} READY</b>, <b>${manual} MANUAL</b>, <b>${fail} FAIL</b>.`;
+  } catch (e) {
+    document.getElementById('summary').className='alert alert-danger'; document.getElementById('summary').textContent='Test runner failed: '+e.message;
+  } finally { btn.disabled=false; btn.textContent='Run all checks'; }
+}
+document.getElementById('runBtn').addEventListener('click', run);
+</script>
+</body>
+</html>
